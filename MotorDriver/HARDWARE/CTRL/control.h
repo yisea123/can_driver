@@ -3,7 +3,8 @@
 
 #include "sys.h"
 
-#define MAX_PWM            1000   //PWM1000速度对应4523的脉冲
+#define MAX_PWM            300   //PWM1000速度对应4523的脉冲
+#define MAX_PLUSE          1000
 #define MIN_PWM            0
 #define FOWARD             0
 #define BACK               1
@@ -12,8 +13,51 @@
 #define MotorPeriodIn      1
 #define MotorPeriodOut     0
 
-#define CLOSE_LOOP         1
-#define OPEN_LOOP          0
+
+//*****电机运行模式选择************//
+/*
+		1 开环测试
+		2 闭环测试
+		3 开环运行
+		4 闭环运行
+*/
+#define   Mode               3
+
+#if Mode == 1
+	//*****开环测试模式************//
+	#define OPENLOOPTESTMODE   1
+	#define CLOSELOOPTESTMODE  0
+	#define NormalMODE				 0
+	#define OPEN_LOOP          1
+	#define CLOSE_LOOP         0
+#endif
+
+#if Mode == 2
+	//*****闭环测试模式************//
+	#define OPENLOOPTESTMODE   0
+	#define CLOSELOOPTESTMODE  1
+	#define NormalMODE				 0
+	#define OPEN_LOOP          0
+	#define CLOSE_LOOP         1
+#endif
+
+#if Mode == 3
+	//*****开环运行模式************//
+	#define OPENLOOPTESTMODE   0
+	#define CLOSELOOPTESTMODE  0
+	#define NormalMODE				 1
+	#define OPEN_LOOP          1
+	#define CLOSE_LOOP         0
+#endif
+
+#if Mode == 4
+	//*****闭环运行模式************//
+	#define OPENLOOPTESTMODE   0
+	#define CLOSELOOPTESTMODE  0
+	#define NormalMODE				 1
+	#define OPEN_LOOP          0
+	#define CLOSE_LOOP         1
+#endif
 
 typedef struct TControl//与控制相关的参数全部在此结构体中
 {

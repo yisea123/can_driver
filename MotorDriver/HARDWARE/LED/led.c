@@ -67,6 +67,14 @@ void CarID_Select(void)
 	 }
 	 
 	 printf("this is wheel %d\r\n",ptForkLift->u8CarID);
+	 if(Mode == 1)
+		 printf("开环测试模式\r\n");
+	 else if(Mode == 2)
+		 printf("闭环测试模式\r\n");
+	 else if(Mode == 3)
+		 printf("开环运行模式\r\n");
+	 else if(Mode == 4)
+		 printf("闭环运行模式\r\n");
 	 
 	 
 }

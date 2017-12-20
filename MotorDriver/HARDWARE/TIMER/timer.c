@@ -135,17 +135,26 @@ void TIM3_IRQHandler(void)   //TIM3中断
 								
 				ptForkLift->s16EncoderFilterSpeed = average_data(ptmiddle_filter_queue);
 				
-				//判断CAN是否在线
-				if(ptForkLift->bCanComBox == CanBoxPost)
-				{
-					POSITION_PID(ptForkLift,ptForkLift->s16EncoderFilterSpeed);
-				}
 				
-				else if(ptForkLift->bCanComBox == CanBoxPend)
-				{
-					ptForkLift->u16PWM = 0;
-					SetPwmDir(ptForkLift);
-				}
+				#if NormalMODE //正常运行模式
+						//判断CAN是否在线
+						if(ptForkLift->bCanComBox == CanBoxPost)
+						{
+							POSITION_PID(ptForkLift,ptForkLift->s16EncoderFilterSpeed);
+						}
+						
+						else if(ptForkLift->bCanComBox == CanBoxPend)
+						{
+							ptForkLift->u16PWM = 0;
+							SetPwmDir(ptForkLift);
+						}
+				#endif
+				
+				#if OPENLOOPTESTMODE	|| CLOSELOOPTESTMODE//测试模式
+				
+						POSITION_PID(ptForkLift,ptForkLift->s16EncoderFilterSpeed);
+				
+				#endif
 				
 				
 			    
